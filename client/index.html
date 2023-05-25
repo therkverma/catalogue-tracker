@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html class="no-js" lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="description" content="">
+    <title>Catalogue Tracker Application</title>
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="style/site.css">
+    <link rel="stylesheet" href="style/toast.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+    <script>
+        async function myFunction() {
+
+            const resp = await new Promise((resolve, reject) => {
+                fetch('/api/data/csv-data', {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                })
+                    .then(result => result.json())
+                    .then(r => resolve(r))
+                    .catch(e => reject(e))
+            })
+
+            if (!!resp) {
+                console.log("resp", resp)
+            }
+
+            var x = document.getElementById("toast-div");
+            x.innerHTML = `${resp.length} users visited today.`
+            x.className = "show";
+            setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
+        }
+    </script>
+</head>
+
+<body onload="myFunction()">
+    <div id="toast-div"></div>
+    <img src="./images/dummy.png" alt="Store Info" />
+</body>
+
+</html>

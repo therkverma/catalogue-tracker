@@ -1,0 +1,1 @@
+export const MAX_TEMP = 40
